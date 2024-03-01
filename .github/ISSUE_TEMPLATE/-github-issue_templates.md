@@ -1,7 +1,7 @@
 ---
 name: ".github/ISSUE_TEMPLATES"
 about: Describe this issue template's purpose here.
-title: issue template
+title: 
 labels: ''
 assignees: ''
 
