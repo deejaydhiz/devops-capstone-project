@@ -148,7 +148,7 @@ class TestAccountService(TestCase):
         #Update fetched account
         account = response.get_json()                # get the data from resp.get_json() as new_account
         account["name"] = "Something Known"          # change new_account["name"] to something known
-        response = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)                      # send a self.client.put() request to the BASE_URL with a json payload of new_account
+        response = self.client.put(f"{BASE_URL}/{account['id']}", json=account)                      # send a self.client.put() request to the BASE_URL with a json payload of new_account
         self.assertEqual(response.status_code, status.HTTP_200_OK)         # assert that the resp.status_code is status.HTTP_200_OK
         new_account = response.get_json()
         self.assertEqual(new_account["name"], "Something Known")
