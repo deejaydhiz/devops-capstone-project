@@ -124,7 +124,7 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     # ADD YOUR TEST CASES HERE ...
-    def test_get_account(self):
+    def test_read_an_account(self):
         """It should Read a single Account"""
         account = self._create_accounts(1)[0]
         resp = self.client.get(
@@ -141,6 +141,14 @@ class TestAccountService(TestCase):
         
     def test_update_account(self):
         """It should update a single account"""
-        account = self._create_accounts(1)[0]
-        response = self.client.post(
-      
+        test_account = AccountFactory()
+        response = self.client.post(BASE_URL, json=test_account.serialize())
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        #Update fetched account
+        account = response.get_json()                # get the data from resp.get_json() as new_account
+        account["name"] = "Something Known"          # change new_account["name"] to something known
+        response = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)                      # send a self.client.put() request to the BASE_URL with a json payload of new_account
+        self.assertEqual(response.status_code, status.HTTP_200_OK)         # assert that the resp.status_code is status.HTTP_200_OK
+        new_account = response.get_json()
+        self.assertEqual(new_account["name"], "Something Known")
